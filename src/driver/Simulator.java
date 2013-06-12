@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class Simulator {
 	private String fileName;
 	private Matrix matrix;
-	private Map<Integer, DependentFile> correspondingFiles;
+	private Map<Integer, String> correspondingFiles;
 
 	public Simulator(String fileName) {
 		this.fileName = fileName;
@@ -27,14 +27,11 @@ public class Simulator {
 				String line = in.nextLine();
 				String[] files = line.split(" ");
 
-				DependentFile from = new DependentFile(files[0].replace("/home/lxiao/jhotdraw/JHotDraw5.4/src/CH/ifa/", ""));
-				DependentFile to = new DependentFile(files[1].replace("/home/lxiao/jhotdraw/JHotDraw5.4/src/CH/ifa/", ""));
-
-				if (!isFileAlreadyPresent(from)) {
-					addFile(from);
+				if (!isFileAlreadyPresent(files[0])) {
+					addFile(files[0]);
 				}
-				if (!isFileAlreadyPresent(to)) {
-					addFile(to);
+				if (!isFileAlreadyPresent(files[1])) {
+					addFile(files[1]);
 				}
 			}
 			in.close();
@@ -43,7 +40,7 @@ public class Simulator {
 		}
 	}
 
-	public boolean isFileAlreadyPresent(DependentFile in) {
+	public boolean isFileAlreadyPresent(String in) {
 		boolean toRet = false;
 		int i = 0;
 		int size = correspondingFiles.size();
@@ -56,14 +53,14 @@ public class Simulator {
 		return toRet;
 	}
 
-	public void addFile(DependentFile in) {
+	public void addFile(String in) {
 		int size = correspondingFiles.size();
 		correspondingFiles.put(size, in);
 	}
 
 	public void initMatrix() {
-		matrix = new Matrix(correspondingFiles.size());
-		matrix.initTiles();
+		matrix = new Matrix(correspondingFiles.size(), correspondingFiles);
+		matrix.initRows();
 	}
 
 	public void fillMatrix() {
@@ -90,7 +87,7 @@ public class Simulator {
 		int toRet = 0;
 		int i = 0;
 		while (!hasFound) {
-			if (s.equalsIgnoreCase(correspondingFiles.get(i).getPath())) {
+			if (s.equalsIgnoreCase(correspondingFiles.get(i))) {
 				hasFound = true;
 				toRet = i;
 			}
@@ -104,12 +101,6 @@ public class Simulator {
 	}
 
 	public void matrixToFile(String outFile) {
-		PrintWriter out;
-		try {
-			out = new PrintWriter(new File(outFile));
-			out.println(matrix.toString(correspondingFiles));
-		} catch (FileNotFoundException e) {
-			System.out.println("Unable to create output file");
-		}
+
 	}
 }
