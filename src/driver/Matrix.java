@@ -11,22 +11,24 @@ import java.util.Map;
  */
 public class Matrix extends DefaultTable {
 	private Column[] matrix;
+	private Map<Integer, String> files;
 
-	public Matrix(int dimensions, Map<Integer, String> correspondingFiles) {
-		matrix = new BooleanColumn[dimensions];
+	public Matrix(Map<Integer, String> files) {
+		matrix = new Column[files.size()];
+		this.files = files;
+		initCols();
 	}
 
-	public void initRows() {
+	public void initCols() {
 		for (int i = 0; i < matrix.length; i++) {
-			matrix[i] = new Row();
+			matrix[i] = new BooleanColumn(files.get(i), matrix.length);
+			((BooleanColumn) matrix[i]).fill(false);
+			this.addColumn(matrix[i]);
 		}
 	}
 
-	public int getDimensions() {
-		return matrix.length;
-	}
-
 	public void markSpot(int col, int row) {
-
+		((BooleanColumn) matrix[col]).set(row, true);
 	}
+
 }

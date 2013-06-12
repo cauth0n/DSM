@@ -1,11 +1,12 @@
 package gui;
 
-import infovis.Column;
+import infovis.graph.visualization.MatrixVisualization;
+import driver.Matrix;
 
 public class Window {
 
-	public Window() {
-		//Column c = new Column();
+	public Window(Matrix table) {
+		MatrixVisualization vis = new MatrixVisualization(table);
 	}
 
 }

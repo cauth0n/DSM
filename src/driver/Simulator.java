@@ -59,8 +59,8 @@ public class Simulator {
 	}
 
 	public void initMatrix() {
-		matrix = new Matrix(correspondingFiles.size(), correspondingFiles);
-		matrix.initRows();
+		matrix = new Matrix(correspondingFiles);
+		matrix.initCols();
 	}
 
 	public void fillMatrix() {
@@ -70,8 +70,8 @@ public class Simulator {
 				String line = in.nextLine();
 				String[] files = line.split(" ");
 
-				int fromSpot = matchFileToMap(files[0].replace("/home/lxiao/jhotdraw/JHotDraw5.4/src/CH/ifa/", ""));
-				int toSpot = matchFileToMap(files[1].replace("/home/lxiao/jhotdraw/JHotDraw5.4/src/CH/ifa/", ""));
+				int fromSpot = matchFileToMap(files[0]);
+				int toSpot = matchFileToMap(files[1]);
 				matrix.markSpot(fromSpot, toSpot);
 
 			}
@@ -102,5 +102,9 @@ public class Simulator {
 
 	public void matrixToFile(String outFile) {
 
+	}
+
+	public Matrix getMatrix() {
+		return matrix;
 	}
 }

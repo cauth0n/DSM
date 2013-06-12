@@ -1,6 +1,6 @@
 package driver;
 
-import java.io.File;
+import gui.Window;
 
 /**
  * cauth0n
@@ -15,13 +15,9 @@ public class Driver {
 	}
 
 	public Driver() {
-		// gui();
-		simulateFromString(fileIn);
-	}
 
-	public void gui() {
-		GUI gui = new GUI();
-		simulateFromFile(gui.setUp());
+		simulateFromString(fileIn);
+
 	}
 
 	public void simulateFromString(String fileIn) {
@@ -29,15 +25,7 @@ public class Driver {
 		go.readValues();
 		go.initMatrix();
 		go.fillMatrix();
-		go.matrixToFile(fileOut);
-	}
-
-	public void simulateFromFile(File fileIn) {
-		Simulator go = new Simulator(fileIn.toString());
-		go.readValues();
-		go.initMatrix();
-		go.fillMatrix();
-		go.matrixToFile(fileOut);
+		Window vis = new Window(go.getMatrix());
 	}
 
 }
