@@ -15,9 +15,7 @@ public class Driver {
 	}
 
 	public Driver() {
-
 		simulateFromString(fileIn);
-
 	}
 
 	public void simulateFromString(String fileIn) {
@@ -25,6 +23,7 @@ public class Driver {
 		go.readValues();
 		go.initMatrix();
 		go.fillMatrix();
+		System.out.println(go.getMatrix());
 		Window vis = new Window(go.getMatrix());
 	}
 

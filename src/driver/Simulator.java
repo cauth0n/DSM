@@ -26,7 +26,6 @@ public class Simulator {
 			while (in.hasNext()) {
 				String line = in.nextLine();
 				String[] files = line.split(" ");
-
 				if (!isFileAlreadyPresent(files[0])) {
 					addFile(files[0]);
 				}
@@ -73,7 +72,6 @@ public class Simulator {
 				int fromSpot = matchFileToMap(files[0]);
 				int toSpot = matchFileToMap(files[1]);
 				matrix.markSpot(fromSpot, toSpot);
-
 			}
 			in.close();
 		} catch (FileNotFoundException e) {
@@ -98,10 +96,6 @@ public class Simulator {
 			i++;
 		}
 		return toRet;
-	}
-
-	public void matrixToFile(String outFile) {
-
 	}
 
 	public Matrix getMatrix() {
