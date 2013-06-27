@@ -1,32 +1,48 @@
 package driver;
 
-import infovis.column.BooleanColumn;
-import infovis.table.DefaultTable;
+import infovis.graph.DefaultGraph;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author cauth0n
  */
-public class Matrix extends DefaultTable {
-	private BooleanColumn[] matrix;
+public class Matrix {
 	private Map<Integer, String> files;
+	private DefaultGraph graph;
 
 	public Matrix(Map<Integer, String> files) {
-		matrix = new BooleanColumn[files.size()];
+		super();
+		graph = new DefaultGraph();
 		this.files = files;
 	}
 
 	public void initCols() {
-		for (int i = 0; i < matrix.length; i++) {
-			matrix[i] = new BooleanColumn(files.get(i), matrix.length);
-			matrix[i].fill(false);
-			this.addColumn(matrix[i]);
+		for (int i = 0; i < files.size(); i++) {
+			graph.addVertex();
 		}
 	}
 
 	public void markSpot(int col, int row) {
-		matrix[col].set(row, true);
+		graph.addEdge(col, row);
 	}
 
+	public DefaultGraph getGraph() {
+		return graph;
+	}
+
+	public Map<Integer, String> getFile() {
+		return files;
+	}
+
+	public List<String> getValueSet() {
+		List<String> retVal = new ArrayList<>();
+
+		for (int i : files.keySet()) {
+			retVal.add(files.get(i));
+		}
+		return retVal;
+	}
 }

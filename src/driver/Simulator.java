@@ -2,7 +2,6 @@ package driver;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -17,6 +16,7 @@ public class Simulator {
 
 	public Simulator(String fileName) {
 		this.fileName = fileName;
+		this.matrix = null;
 		correspondingFiles = new HashMap<>();
 	}
 
@@ -44,7 +44,7 @@ public class Simulator {
 		int i = 0;
 		int size = correspondingFiles.size();
 		while (i < size && !toRet) {
-			if (in.equals(correspondingFiles.get(i))) {
+			if (in.equalsIgnoreCase(correspondingFiles.get(i))) {
 				toRet = true;
 			}
 			i++;
@@ -99,6 +99,12 @@ public class Simulator {
 	}
 
 	public Matrix getMatrix() {
-		return matrix;
+		Matrix retVal = matrix;
+		if (matrix != null) {
+			retVal = matrix;
+		} else {
+			System.out.println("Null matrix...");
+		}
+		return retVal;
 	}
 }
