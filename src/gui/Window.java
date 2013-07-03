@@ -11,14 +11,17 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.table.DefaultTableModel;
 
 import driver.Matrix;
+import java.awt.BorderLayout;
 
 public class Window {
+	private JTable viewTable;
 
 	public Window(Matrix matrix) {
 		// VisualizationPanel panel;
@@ -29,29 +32,18 @@ public class Window {
 		// panel = new VisualizationPanel(vis);
 		JFrame frame = new JFrame("Test");
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		JScrollPane panel = new JScrollPane();
+		panel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		panel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(scrollPane, Alignment.TRAILING,
-				GroupLayout.PREFERRED_SIZE, 657, GroupLayout.PREFERRED_SIZE));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(scrollPane, Alignment.TRAILING,
-				GroupLayout.PREFERRED_SIZE, 446, GroupLayout.PREFERRED_SIZE));
-
-		JList rowNames = new JList(labels.toArray());
-		scrollPane.setRowHeaderView(rowNames);
-
-		JList colNames = new JList(labels.toArray());
-		scrollPane.setColumnHeaderView(colNames);
-		// Group row = new Group(rowNames);
-
-		// groupLayout.setHorizontalGroup(rowNames);
-
-		frame.getContentPane().setLayout(groupLayout);
+		DefaultTableModel table = new DefaultTableModel(matrix.getTiles(), matrix.getValueSet().toArray());
+		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		viewTable = new JTable(table);
+		viewTable.addMouseListener(new TableActions(matrix.getFile()));
+		panel.setViewportView(viewTable);
+		frame.getContentPane().add(panel);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(888, 540);
-		frame.pack();
 		frame.setVisible(true);
 	}
 

@@ -1,7 +1,5 @@
 package driver;
 
-import infovis.graph.DefaultGraph;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,26 +9,28 @@ import java.util.Map;
  */
 public class Matrix {
 	private Map<Integer, String> files;
-	private DefaultGraph graph;
+	private Tile[][] tileArray;
+	private int size;
 
 	public Matrix(Map<Integer, String> files) {
-		super();
-		graph = new DefaultGraph();
+		size = files.size();
 		this.files = files;
+		tileArray = new Tile[size][size];
 	}
 
 	public void initCols() {
-		for (int i = 0; i < files.size(); i++) {
-			graph.addVertex();
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				tileArray[i][j] = new Tile();
+				if (i == j) {
+					tileArray[i][j].setFound('-');
+				}
+			}
 		}
 	}
 
 	public void markSpot(int col, int row) {
-		graph.addEdge(col, row);
-	}
-
-	public DefaultGraph getGraph() {
-		return graph;
+		tileArray[col][row].setFound('x');
 	}
 
 	public Map<Integer, String> getFile() {
@@ -44,5 +44,31 @@ public class Matrix {
 			retVal.add(files.get(i));
 		}
 		return retVal;
+	}
+
+	public Tile[][] getTiles() {
+		return tileArray;
+	}
+
+	private class Tile {
+		private char isFound;
+
+		private Tile() {
+			isFound = ' ';
+		}
+
+		private void setFound(char found) {
+			this.isFound = found;
+		}
+
+		private char getFound() {
+			return isFound;
+		}
+
+		public String toString() {
+			String retVal = isFound + "";
+			return retVal;
+		}
+
 	}
 }
